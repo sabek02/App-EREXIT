@@ -1,0 +1,3294 @@
+﻿<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ff6a00" />
+        <title>CFP EREXIT Manager</title>
+        <link rel="icon" href="favicon.ico?v=20260601" type="image/svg+xml" />
+        <link rel="stylesheet" href="styles.css?v=20260616-auto-logout" />
+        <script defer src="app.js?v=20260616-auto-logout"></script>
+    </head>
+    <body class="loading">
+        <section class="loading-screen" aria-live="polite" aria-label="Chargement de l'application">
+            <div class="loading-card">
+                <div class="loading-logo-wrap">
+                    <img src="data/logo.png" alt="CFP EREXIT" />
+                </div>
+                <div class="loading-copy">
+                    <p class="eyebrow">Application de gestion</p>
+                    <h1>CFP EREXIT</h1>
+                    <p>Préparation de votre espace...</p>
+                </div>
+                <div class="loading-progress" aria-hidden="true">
+                    <span></span>
+                </div>
+                <p class="loading-hint">Chargement des données, comptes et paramètres</p>
+            </div>
+        </section>
+        <section class="login-screen" id="loginScreen">
+            <div class="login-options">
+                <div class="login-choice-view" id="loginChoiceView">
+                    <div class="login-choice-hero">
+                        <div class="brand-mark large">CE</div>
+                        <p class="eyebrow">CFP EREXIT</p>
+                        <h1>Bienvenue dans votre espace de gestion</h1>
+                        <p>
+                            Choisissez votre profil pour accéder aux informations qui vous
+                            concernent.
+                        </p>
+                    </div>
+                    <div class="login-choice-grid">
+                        <button
+                            class="login-choice-card"
+                            type="button"
+                            data-login-choice="personnel"
+                        >
+                            <span class="choice-mark">PE</span>
+                            <strong>Personnel</strong>
+                            <small
+                                >Administration, caisse, formations, rapports et suivi
+                                interne.</small
+                            >
+                        </button>
+                        <button
+                            class="login-choice-card student"
+                            type="button"
+                            data-login-choice="student"
+                        >
+                            <span class="choice-mark">ET</span>
+                            <strong>Étudiant</strong>
+                            <small>Paiements, notes, présences et informations personnelles.</small>
+                        </button>
+                        <a class="login-choice-card online-registration-link" href="/inscription">
+                            <span class="choice-mark">IN</span>
+                            <strong>Inscription en ligne</strong>
+                            <small
+                                >Créer une nouvelle préinscription pour rejoindre le centre.</small
+                            >
+                        </a>
+                    </div>
+                </div>
+
+                <form class="login-card login-form-panel" id="loginForm" hidden>
+                    <button class="link-button login-back" type="button" data-login-back>
+                        Retour
+                    </button>
+                    <div class="brand login-brand">
+                        <div class="brand-mark">CE</div>
+                        <div>
+                            <h1>CFP EREXIT</h1>
+                            <p>Connexion personnel</p>
+                        </div>
+                    </div>
+                    <label>
+                        <span>Identifiant</span>
+                        <input id="loginEmail" type="text" autocomplete="username" required />
+                    </label>
+                    <label>
+                        <span>Mot de passe</span>
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                        />
+                    </label>
+                    <p class="login-error" id="loginError"></p>
+                    <button
+                        class="link-button forgot-password-link"
+                        type="button"
+                        id="forgotPasswordButton"
+                    >
+                        Mot de passe oublié ?
+                    </button>
+                    <div class="password-reset-box" id="passwordResetBox" hidden>
+                        <label>
+                            <span>Email du compte</span>
+                            <input
+                                id="passwordResetEmail"
+                                type="email"
+                                autocomplete="email"
+                                placeholder="votre@email.com"
+                            />
+                        </label>
+                        <div class="form-actions">
+                            <button class="button secondary" type="button" id="cancelPasswordReset">
+                                Annuler
+                            </button>
+                            <button class="button primary" type="button" id="sendPasswordReset">
+                                Envoyer la demande
+                            </button>
+                        </div>
+                        <p class="muted" id="passwordResetMessage"></p>
+                    </div>
+                    <button class="button primary" type="submit">Connexion</button>
+                </form>
+
+                <form
+                    class="login-card login-form-panel student-login-card"
+                    id="studentPortalLoginForm"
+                    hidden
+                >
+                    <button class="link-button login-back" type="button" data-login-back>
+                        Retour
+                    </button>
+                    <div class="brand login-brand">
+                        <div class="brand-mark">ET</div>
+                        <div>
+                            <h1>Espace étudiant</h1>
+                            <p>Paiements, notes et informations</p>
+                        </div>
+                    </div>
+                    <label>
+                        <span>Matricule</span>
+                        <input
+                            id="studentPortalMatricule"
+                            type="text"
+                            autocomplete="username"
+                            required
+                            placeholder="ERX-2026-001"
+                        />
+                    </label>
+                    <label>
+                        <span>Téléphone</span>
+                        <input
+                            id="studentPortalPhone"
+                            type="tel"
+                            autocomplete="tel"
+                            required
+                            placeholder="Numéro enregistré"
+                        />
+                    </label>
+                    <p class="login-error" id="studentPortalLoginError"></p>
+                    <button class="button primary" type="submit">Voir mon espace</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="public-registration" id="publicRegistration" hidden>
+            <div class="public-registration-shell">
+                <header class="public-registration-header">
+                    <div class="brand">
+                        <div class="brand-mark">CE</div>
+                        <div>
+                            <h1>CFP EREXIT</h1>
+                            <p>Inscription en ligne</p>
+                        </div>
+                    </div>
+                    <a class="button secondary" href="/">Connexion</a>
+                </header>
+
+                <main class="public-registration-card">
+                    <div>
+                        <p class="eyebrow">Nouvelle candidature</p>
+                        <h2>Remplissez votre fiche d'inscription</h2>
+                        <p class="muted">
+                            Votre dossier sera enregistré en préinscription. L'administration le
+                            validera après contrôle et paiement.
+                        </p>
+                    </div>
+
+                    <form id="onlineRegistrationForm" class="form-grid">
+                        <label>
+                            <span>Nom</span>
+                            <input
+                                id="onlineLastName"
+                                type="text"
+                                required
+                                class="uppercase-input"
+                                autocomplete="family-name"
+                            />
+                        </label>
+                        <label>
+                            <span>Prénom</span>
+                            <input
+                                id="onlineFirstName"
+                                type="text"
+                                required
+                                autocomplete="given-name"
+                            />
+                        </label>
+                        <label>
+                            <span>Sexe</span>
+                            <select id="onlineGender" required>
+                                <option value="">Choisir</option>
+                                <option value="F">Féminin</option>
+                                <option value="M">Masculin</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Date de naissance</span>
+                            <input id="onlineBirthDate" type="date" />
+                        </label>
+                        <label>
+                            <span>Lieu de naissance</span>
+                            <input id="onlineBirthPlace" type="text" />
+                        </label>
+                        <label>
+                            <span>Nationalite</span>
+                            <input id="onlineNationality" type="text" value="Togolaise" />
+                        </label>
+                        <label>
+                            <span>Téléphone</span>
+                            <input id="onlinePhone" type="tel" required autocomplete="tel" />
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input id="onlineEmail" type="email" autocomplete="email" />
+                        </label>
+                        <label class="full">
+                            <span>Adresse</span>
+                            <input id="onlineAddress" type="text" autocomplete="street-address" />
+                        </label>
+                        <label>
+                            <span>Quartier</span>
+                            <input id="onlineDistrict" type="text" />
+                        </label>
+                        <label>
+                            <span>Ville</span>
+                            <input id="onlineCity" type="text" value="Lome" />
+                        </label>
+                        <label>
+                            <span>Pays</span>
+                            <input id="onlineCountry" type="text" value="Togo" />
+                        </label>
+                        <label>
+                            <span>Niveau d'etude</span>
+                            <input id="onlineStudyLevel" type="text" />
+                        </label>
+                        <label>
+                            <span>Profession / situation</span>
+                            <input id="onlineProfession" type="text" />
+                        </label>
+                        <label>
+                            <span>Formation souhaitée</span>
+                            <select id="onlineCourse" required></select>
+                        </label>
+                        <label>
+                            <span>Type de cours souhaite</span>
+                            <select id="onlinePreferredCourseType">
+                                <option value="">Choisir</option>
+                                <option value="jour">Cours du jour</option>
+                                <option value="soir">Cours du soir</option>
+                                <option value="week-end">Week-end</option>
+                                <option value="ligne">Cours en ligne</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Personne à contacter</span>
+                            <input id="onlineEmergencyName" type="text" />
+                        </label>
+                        <label>
+                            <span>Téléphone de la personne à contacter</span>
+                            <input id="onlineEmergencyPhone" type="tel" />
+                        </label>
+                        <label>
+                            <span>Responsable paiement</span>
+                            <input id="onlinePaymentResponsible" type="text" />
+                        </label>
+                        <label>
+                            <span>Telephone responsable paiement</span>
+                            <input id="onlinePaymentResponsiblePhone" type="tel" />
+                        </label>
+                        <label>
+                            <span>Source</span>
+                            <select id="onlineSource">
+                                <option value="site-web">Site web</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="recommandation">Recommandation</option>
+                                <option value="ancien-etudiant">Ancien etudiant</option>
+                                <option value="bureau">Passage au bureau</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </label>
+                        <label class="full">
+                            <span>Message</span>
+                            <textarea
+                                id="onlineMessage"
+                                rows="3"
+                                placeholder="Informations complémentaires"
+                            ></textarea>
+                        </label>
+                        <p class="login-error full" id="onlineRegistrationError"></p>
+                        <p class="success-message full" id="onlineRegistrationSuccess" hidden></p>
+                        <div class="form-actions full">
+                            <button class="button primary" type="submit">
+                                Envoyer mon inscription
+                            </button>
+                        </div>
+                    </form>
+                </main>
+            </div>
+        </section>
+
+        <section class="student-portal" id="studentPortal" hidden>
+            <header class="student-portal-topbar">
+                <div class="brand student-portal-brand">
+                    <div class="brand-mark">CE</div>
+                    <div>
+                        <h1>CFP EREXIT</h1>
+                        <p>Espace étudiant</p>
+                    </div>
+                </div>
+                <button class="button secondary" type="button" id="studentPortalLogout">
+                    Quitter
+                </button>
+            </header>
+            <main class="student-portal-shell">
+                <section class="student-portal-hero">
+                    <div>
+                        <p class="eyebrow">Tableau personnel</p>
+                        <h2 id="studentPortalName">Étudiant</h2>
+                        <p id="studentPortalMeta" class="muted"></p>
+                    </div>
+                </section>
+                <div class="stats-grid student-portal-stats" id="studentPortalSummary"></div>
+                <div class="student-portal-grid">
+                    <section class="panel student-portal-wide">
+                        <div class="panel-header">
+                            <h3>Mes notifications</h3>
+                        </div>
+                        <div class="student-notification-list" id="studentPortalNotifications"></div>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h3>Mes informations</h3>
+                        </div>
+                        <div id="studentPortalInfo" class="detail-list"></div>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h3>Mes inscriptions</h3>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Formation</th>
+                                        <th>Type</th>
+                                        <th>Scolarité</th>
+                                        <th>Payé</th>
+                                        <th>Reste</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentPortalEnrollments"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h3>Mes paiements</h3>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Reçu</th>
+                                        <th>Motif</th>
+                                        <th>Montant</th>
+                                        <th>Mode</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentPortalPayments"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h3>Mes notes</h3>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Évaluation</th>
+                                        <th>Promotion</th>
+                                        <th>Note</th>
+                                        <th>Appréciation</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentPortalGrades"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="panel student-portal-wide">
+                        <div class="panel-header">
+                            <h3>Mes présences</h3>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Promotion</th>
+                                        <th>Séance</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentPortalAttendance"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </section>
+
+        <div class="app-shell" id="appShell">
+            <aside class="sidebar">
+                <div class="brand">
+                    <div class="brand-mark">CE</div>
+                    <div>
+                        <h1>CFP EREXIT</h1>
+                        <p>Centre de Formation Professionnelle</p>
+                    </div>
+                </div>
+
+                <nav class="nav-list" aria-label="Navigation principale">
+                    <button class="nav-button active" type="button" data-view-target="dashboard">
+                        Tableau de bord
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="onlineRequests">
+                        Demandes en ligne
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="students">
+                        Étudiants
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="courses">
+                        Formations
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="groups">
+                        Promotions
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="enrollments">
+                        Inscriptions
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="payments">
+                        Paiements
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="cash">Caisse</button>
+                    <button class="nav-button" type="button" data-view-target="notifications">
+                        Notifications <span class="nav-badge" id="notificationNavCount">0</span>
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="planning">
+                        Planning
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="announcements">
+                        Annonces
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="resources">
+                        Salles & matériels
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="attendance">
+                        Présences
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="trainers">
+                        Formateurs
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="staff">
+                        Personnel
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="grades">
+                        Notes
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="reports">
+                        Rapports
+                    </button>
+                    <button class="nav-button" type="button" data-view-target="settings">
+                        Paramètres
+                    </button>
+                </nav>
+            </aside>
+
+            <main class="workspace">
+                <header class="topbar">
+                    <div>
+                        <p class="eyebrow">Application de gestion</p>
+                        <h2 id="pageTitle">Tableau de bord</h2>
+                    </div>
+                    <div class="topbar-actions">
+                        <label class="role-selector">
+                            <span>Profil</span>
+                            <select id="roleSelect">
+                                <option>Administrateur</option>
+                                <option>Directeur</option>
+                                <option>Secrétaire</option>
+                                <option>Comptable</option>
+                                <option>Formateur</option>
+                            </select>
+                        </label>
+                        <span class="user-pill" id="currentUserName">Mode local</span>
+                        <span class="save-status" id="saveStatus">Sauvegarde auto</span>
+                        <button class="button secondary" type="button" id="backupButton">
+                            Sauvegarder
+                        </button>
+                        <button class="button secondary" type="button" id="logoutButton">
+                            Déconnexion
+                        </button>
+                    </div>
+                </header>
+
+                <section class="view active" data-view="dashboard">
+                    <div class="stats-grid" id="statsGrid"></div>
+
+                    <section class="panel dashboard-advanced">
+                        <div class="panel-header">
+                            <h3>Statistiques avancées</h3>
+                            <span class="badge" id="activeYearLabel">Année active</span>
+                        </div>
+                        <div class="advanced-stats-grid" id="advancedStatsGrid"></div>
+                        <div class="advanced-stats-details" id="advancedStatsDetails"></div>
+                    </section>
+
+                    <section class="panel dashboard-analytics">
+                        <div class="panel-header">
+                            <h3>Analyse financière</h3>
+                            <span class="badge">Vue globale</span>
+                        </div>
+                        <div class="analytics-grid">
+                            <div class="finance-bars" id="dashboardFinanceBars"></div>
+                            <div class="tuition-ring-card">
+                                <div class="tuition-ring" id="dashboardTuitionRing">
+                                    <strong>0%</strong>
+                                    <span>recouvré</span>
+                                </div>
+                                <div
+                                    class="tuition-ring-details"
+                                    id="dashboardTuitionDetails"
+                                ></div>
+                            </div>
+                            <div class="course-bars" id="dashboardCourseBars"></div>
+                        </div>
+                    </section>
+
+                    <section class="panel payment-alert-panel">
+                        <div class="panel-header">
+                            <h3>Alertes de paiement</h3>
+                            <div class="panel-header-actions">
+                                <span class="badge" id="paymentAlertCount">0 alerte</span>
+                                <button class="link-button" type="button" data-view-target="notifications">
+                                    Tout voir
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Étudiant</th>
+                                        <th>Alerte</th>
+                                        <th>Montant</th>
+                                        <th>Dernier paiement</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paymentAlertsTable"></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <div class="dashboard-grid">
+                        <section class="panel report-financial-panel">
+                            <div class="panel-header">
+                                <h3>Derniers paiements</h3>
+                                <button
+                                    class="link-button"
+                                    type="button"
+                                    data-view-target="payments"
+                                >
+                                    Voir tout
+                                </button>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Reçu</th>
+                                            <th>Étudiant</th>
+                                            <th>Montant</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentPaymentsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="panel report-balance-panel">
+                            <div class="panel-header">
+                                <h3>Soldes à suivre</h3>
+                                <button
+                                    class="link-button"
+                                    type="button"
+                                    data-view-target="reports"
+                                >
+                                    Rapports
+                                </button>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Étudiant</th>
+                                            <th>Formation</th>
+                                            <th>Reste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="balancesTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="notifications">
+                    <div class="notification-summary-grid" id="notificationSummary"></div>
+
+                    <section class="panel">
+                        <div class="panel-header stacked">
+                            <div>
+                                <h3>Centre de notifications</h3>
+                                <p>Alertes importantes à traiter pour le centre</p>
+                            </div>
+                            <span class="badge" id="notificationCount">0 notification</span>
+                        </div>
+                        <div class="toolbar compact-toolbar">
+                            <label>
+                                <span>Priorité</span>
+                                <select id="notificationSeverityFilter">
+                                    <option value="">Toutes</option>
+                                    <option value="danger">Urgentes</option>
+                                    <option value="warning">À suivre</option>
+                                    <option value="info">Information</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Type</span>
+                                <select id="notificationTypeFilter">
+                                    <option value="">Tous les types</option>
+                                    <option value="payment">Paiements</option>
+                                    <option value="document">Documents</option>
+                                    <option value="makeup">Rattrapages</option>
+                                    <option value="attendance">Présences</option>
+                                    <option value="online">Inscriptions en ligne</option>
+                                    <option value="group">Promotions</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Priorité</th>
+                                        <th>Type</th>
+                                        <th>Détail</th>
+                                        <th>Date / référence</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="notificationsTable"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="view" data-view="planning">
+                    <div class="notification-summary-grid planning-summary-grid" id="planningSummary"></div>
+
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Nouvel événement</h3>
+                                    <p>Cours, réunion, examen, rattrapage ou rappel interne</p>
+                                </div>
+                            </div>
+                            <form id="planningEventForm" class="form-grid">
+                                <input id="planningEventId" type="hidden" />
+                                <label>
+                                    <span>Date</span>
+                                    <input id="planningEventDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Heure</span>
+                                    <input id="planningEventTime" type="time" />
+                                </label>
+                                <label>
+                                    <span>Type</span>
+                                    <select id="planningEventType">
+                                        <option value="cours">Cours</option>
+                                        <option value="examen">Examen</option>
+                                        <option value="rattrapage">Rattrapage</option>
+                                        <option value="reunion">Réunion</option>
+                                        <option value="paiement">Paiement</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Titre</span>
+                                    <input
+                                        id="planningEventTitle"
+                                        type="text"
+                                        required
+                                        placeholder="Ex. Examen Word"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Promotion</span>
+                                    <select id="planningEventGroup"></select>
+                                </label>
+                                <label>
+                                    <span>Formateur</span>
+                                    <select id="planningEventTrainer"></select>
+                                </label>
+                                <label>
+                                    <span>Salle</span>
+                                    <select id="planningEventRoom"></select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation</span>
+                                    <textarea id="planningEventNote" rows="3"></textarea>
+                                </label>
+                                <div class="form-actions full">
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="planningEventCancelEdit"
+                                        hidden
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Planning global</h3>
+                                    <p>Événements manuels et automatiques</p>
+                                </div>
+                                <span class="badge" id="planningCount">0 événement</span>
+                            </div>
+                            <div class="toolbar compact-toolbar">
+                                <label>
+                                    <span>Début</span>
+                                    <input id="planningFromFilter" type="date" />
+                                </label>
+                                <label>
+                                    <span>Fin</span>
+                                    <input id="planningToFilter" type="date" />
+                                </label>
+                                <label>
+                                    <span>Type</span>
+                                    <select id="planningTypeFilter">
+                                        <option value="">Tous les types</option>
+                                        <option value="cours">Cours</option>
+                                        <option value="examen">Examen</option>
+                                        <option value="rattrapage">Rattrapage</option>
+                                        <option value="paiement">Paiement</option>
+                                        <option value="reunion">Réunion</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Événement</th>
+                                            <th>Promotion / Formateur</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="planningTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="announcements">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Nouvelle annonce</h3>
+                                    <p>Message interne visible par le public ciblé</p>
+                                </div>
+                            </div>
+                            <form id="announcementForm" class="form-grid">
+                                <input id="announcementId" type="hidden" />
+                                <label>
+                                    <span>Titre</span>
+                                    <input id="announcementTitle" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Priorité</span>
+                                    <select id="announcementPriority">
+                                        <option value="info">Information</option>
+                                        <option value="warning">Important</option>
+                                        <option value="danger">Urgent</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Public</span>
+                                    <select id="announcementAudience">
+                                        <option value="all">Tout le monde</option>
+                                        <option value="students">Étudiants</option>
+                                        <option value="staff">Personnel</option>
+                                        <option value="trainers">Formateurs</option>
+                                        <option value="group">Promotion précise</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Promotion</span>
+                                    <select id="announcementGroup"></select>
+                                </label>
+                                <label>
+                                    <span>Date publication</span>
+                                    <input id="announcementDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Expiration</span>
+                                    <input id="announcementExpiry" type="date" />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="announcementStatus">
+                                        <option value="published">Publié</option>
+                                        <option value="draft">Brouillon</option>
+                                        <option value="archived">Archivé</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Message</span>
+                                    <textarea id="announcementMessage" rows="5" required></textarea>
+                                </label>
+                                <div class="form-actions full">
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="announcementCancelEdit"
+                                        hidden
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button class="button primary" type="submit">
+                                        Publier / enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Messagerie / annonces</h3>
+                                    <p>Informations envoyées aux étudiants et à l'équipe</p>
+                                </div>
+                                <span class="badge" id="announcementCount">0 annonce</span>
+                            </div>
+                            <div class="toolbar compact-toolbar">
+                                <label>
+                                    <span>Public</span>
+                                    <select id="announcementAudienceFilter">
+                                        <option value="">Tous</option>
+                                        <option value="all">Tout le monde</option>
+                                        <option value="students">Étudiants</option>
+                                        <option value="staff">Personnel</option>
+                                        <option value="trainers">Formateurs</option>
+                                        <option value="group">Promotion</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="announcementStatusFilter">
+                                        <option value="">Tous</option>
+                                        <option value="published">Publié</option>
+                                        <option value="draft">Brouillon</option>
+                                        <option value="archived">Archivé</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Annonce</th>
+                                            <th>Public</th>
+                                            <th>Statut</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="announcementsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="resources">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Salles</h3>
+                                    <p>Capacité, disponibilité et localisation</p>
+                                </div>
+                                <span class="badge" id="roomCount">0 salle</span>
+                            </div>
+                            <form id="roomForm" class="form-grid">
+                                <input id="roomId" type="hidden" />
+                                <label>
+                                    <span>Nom de la salle</span>
+                                    <input id="roomName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Capacité</span>
+                                    <input id="roomCapacity" type="number" min="0" step="1" />
+                                </label>
+                                <label>
+                                    <span>Localisation</span>
+                                    <input id="roomLocation" type="text" />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="roomStatus">
+                                        <option value="available">Disponible</option>
+                                        <option value="occupied">Occupée</option>
+                                        <option value="maintenance">Maintenance</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation</span>
+                                    <textarea id="roomNote" rows="2"></textarea>
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button secondary" type="button" id="roomCancelEdit" hidden>
+                                        Annuler
+                                    </button>
+                                    <button class="button primary" type="submit">Enregistrer la salle</button>
+                                </div>
+                            </form>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Salle</th>
+                                            <th>Capacité</th>
+                                            <th>Statut</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="roomsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Matériels</h3>
+                                    <p>Inventaire et affectation aux salles</p>
+                                </div>
+                                <span class="badge" id="equipmentCount">0 matériel</span>
+                            </div>
+                            <form id="equipmentForm" class="form-grid">
+                                <input id="equipmentId" type="hidden" />
+                                <label>
+                                    <span>Nom du matériel</span>
+                                    <input id="equipmentName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Type</span>
+                                    <input id="equipmentType" type="text" placeholder="Ordinateur, projecteur..." />
+                                </label>
+                                <label>
+                                    <span>Salle</span>
+                                    <select id="equipmentRoom"></select>
+                                </label>
+                                <label>
+                                    <span>Quantité</span>
+                                    <input id="equipmentQuantity" type="number" min="1" step="1" value="1" />
+                                </label>
+                                <label>
+                                    <span>État</span>
+                                    <select id="equipmentCondition">
+                                        <option value="good">Bon</option>
+                                        <option value="repair">À réparer</option>
+                                        <option value="missing">Manquant</option>
+                                        <option value="retired">Retiré</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation</span>
+                                    <textarea id="equipmentNote" rows="2"></textarea>
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button secondary" type="button" id="equipmentCancelEdit" hidden>
+                                        Annuler
+                                    </button>
+                                    <button class="button primary" type="submit">Enregistrer le matériel</button>
+                                </div>
+                            </form>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Matériel</th>
+                                            <th>Salle</th>
+                                            <th>Quantité</th>
+                                            <th>État</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="equipmentTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="onlineRequests">
+                    <section class="panel">
+                        <div class="panel-header stacked">
+                            <div>
+                                <h3>Demandes d'inscription en ligne</h3>
+                                <p id="onlineRequestCount"></p>
+                            </div>
+                            <div class="filters">
+                                <input
+                                    id="onlineRequestSearch"
+                                    type="search"
+                                    placeholder="Rechercher"
+                                />
+                                <select id="onlineRequestStatusFilter">
+                                    <option value="">Tous les statuts</option>
+                                    <option value="nouvelle">Nouvelle demande</option>
+                                    <option value="verification">En vérification</option>
+                                    <option value="dossier-incomplet">Dossier incomplet</option>
+                                    <option value="paiement-attendu">Paiement attendu</option>
+                                    <option value="acceptee">Acceptée</option>
+                                    <option value="refusee">Refusée</option>
+                                    <option value="convertie">Convertie en inscription</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Demande</th>
+                                        <th>Candidat</th>
+                                        <th>Formation souhaitee</th>
+                                        <th>Contact</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="onlineRequestsTable"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="view" data-view="students">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="studentFormTitle">Nouvel étudiant</h3>
+                                <button class="link-button" type="button" id="studentCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="studentForm" class="form-grid">
+                                <label>
+                                    <span>Matricule</span>
+                                    <input
+                                        id="studentMatricule"
+                                        type="text"
+                                        required
+                                        readonly
+                                        placeholder="ERX-2026-12345"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="studentStatus">
+                                        <option value="prospect">Prospect</option>
+                                        <option value="preinscrit">Préinscrit</option>
+                                        <option value="validation">En attente de validation</option>
+                                        <option value="actif" selected>Actif</option>
+                                        <option value="suspendu">Suspendu</option>
+                                        <option value="etranger">Étranger</option>
+                                        <option value="reprogramme">Reprogrammé</option>
+                                        <option value="termine">Terminé</option>
+                                        <option value="abandon">Abandon</option>
+                                        <option value="desiste">Désisté</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Nom</span>
+                                    <input
+                                        id="studentLastName"
+                                        type="text"
+                                        required
+                                        class="uppercase-input"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Prénom</span>
+                                    <input id="studentFirstName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Sexe</span>
+                                    <select id="studentGender">
+                                        <option value="">Non précisé</option>
+                                        <option value="F">Féminin</option>
+                                        <option value="M">Masculin</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date de naissance</span>
+                                    <input id="studentBirthDate" type="date" />
+                                </label>
+                                <label>
+                                    <span>Lieu de naissance</span>
+                                    <input id="studentBirthPlace" type="text" />
+                                </label>
+                                <label>
+                                    <span>Nationalite</span>
+                                    <input id="studentNationality" type="text" value="Togolaise" />
+                                </label>
+                                <label>
+                                    <span>Téléphone</span>
+                                    <input id="studentPhone" type="tel" required />
+                                </label>
+                                <label>
+                                    <span>Téléphone secondaire</span>
+                                    <input id="studentPhone2" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Email</span>
+                                    <input id="studentEmail" type="email" />
+                                </label>
+                                <label class="full">
+                                    <span>Adresse</span>
+                                    <input id="studentAddress" type="text" />
+                                </label>
+                                <label>
+                                    <span>Quartier</span>
+                                    <input id="studentDistrict" type="text" />
+                                </label>
+                                <label>
+                                    <span>Ville</span>
+                                    <input id="studentCity" type="text" value="Lome" />
+                                </label>
+                                <label>
+                                    <span>Pays</span>
+                                    <input id="studentCountry" type="text" value="Togo" />
+                                </label>
+                                <label>
+                                    <span>Niveau d'etude</span>
+                                    <input id="studentStudyLevel" type="text" />
+                                </label>
+                                <label>
+                                    <span>Profession / situation</span>
+                                    <input id="studentProfession" type="text" />
+                                </label>
+                                <label>
+                                    <span>Formation souhaitee</span>
+                                    <select id="studentDesiredCourse">
+                                        <option value="">Choisir une formation</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Nom du pere</span>
+                                    <input id="studentFatherName" type="text" />
+                                </label>
+                                <label>
+                                    <span>Telephone du pere</span>
+                                    <input id="studentFatherPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Nom de la mere</span>
+                                    <input id="studentMotherName" type="text" />
+                                </label>
+                                <label>
+                                    <span>Telephone de la mere</span>
+                                    <input id="studentMotherPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Personne à contacter</span>
+                                    <input id="studentEmergencyName" type="text" />
+                                </label>
+                                <label>
+                                    <span>Téléphone de la personne à contacter</span>
+                                    <input id="studentEmergencyPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Responsable du paiement</span>
+                                    <input id="studentPaymentResponsible" type="text" />
+                                </label>
+                                <label>
+                                    <span>Telephone responsable paiement</span>
+                                    <input id="studentPaymentResponsiblePhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Source du prospect</span>
+                                    <select id="studentSource">
+                                        <option value="">Non precise</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="site-web">Site web</option>
+                                        <option value="recommandation">Recommandation</option>
+                                        <option value="ancien-etudiant">Ancien etudiant</option>
+                                        <option value="bureau">Passage au bureau</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation</span>
+                                    <textarea id="studentObservation" rows="3"></textarea>
+                                </label>
+                                <div class="full person-file-box">
+                                    <div class="person-photo-box">
+                                        <div class="person-photo-preview" id="studentPhotoPreview">
+                                            Photo
+                                        </div>
+                                        <div class="action-stack">
+                                            <label class="file-input">
+                                                <span>Choisir une photo</span>
+                                                <input
+                                                    id="studentPhotoInput"
+                                                    type="file"
+                                                    accept="image/png,image/jpeg,image/webp"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="studentRemovePhoto"
+                                            >
+                                                Retirer la photo
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="document-upload-box">
+                                        <h4>Dossier étudiant</h4>
+                                        <div class="document-upload-row">
+                                            <input
+                                                id="studentDocumentType"
+                                                type="text"
+                                                placeholder="Nom du document : pièce d'identité, contrat signé..."
+                                                aria-label="Nom du document étudiant"
+                                            />
+                                            <label class="file-input">
+                                                <span>Choisir fichier</span>
+                                                <input
+                                                    id="studentDocumentFile"
+                                                    type="file"
+                                                    accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="studentAddDocument"
+                                            >
+                                                Ajouter
+                                            </button>
+                                        </div>
+                                        <div
+                                            id="studentDocumentList"
+                                            class="attached-document-list"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <label>
+                                    <span>Statut des documents</span>
+                                    <select id="studentDocumentStatus">
+                                        <option value="manquant">Manquant</option>
+                                        <option value="fourni">Fourni</option>
+                                        <option value="rejete">Rejeté</option>
+                                        <option value="valide">Validé</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation documents</span>
+                                    <textarea id="studentDocumentObservation" rows="2"></textarea>
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Liste des étudiants</h3>
+                                    <p id="studentCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <input
+                                        id="studentSearch"
+                                        type="search"
+                                        placeholder="Rechercher"
+                                    />
+                                    <select id="studentStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="prospect">Prospect</option>
+                                        <option value="preinscrit">Préinscrit</option>
+                                        <option value="validation">En attente de validation</option>
+                                        <option value="actif">Actif</option>
+                                        <option value="suspendu">Suspendu</option>
+                                        <option value="etranger">Étranger</option>
+                                        <option value="reprogramme">Reprogrammé</option>
+                                        <option value="termine">Terminé</option>
+                                        <option value="abandon">Abandon</option>
+                                        <option value="desiste">Désisté</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                    <select id="studentCourseFilter">
+                                        <option value="">Toutes les formations</option>
+                                    </select>
+                                    <select id="studentSourceFilter">
+                                        <option value="">Toutes les sources</option>
+                                        <option value="facebook">Facebook</option>
+                                        <option value="site-web">Site web</option>
+                                        <option value="recommandation">Recommandation</option>
+                                        <option value="ancien-etudiant">Ancien etudiant</option>
+                                        <option value="bureau">Passage au bureau</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                    <input
+                                        id="studentLocationFilter"
+                                        type="search"
+                                        placeholder="Ville / quartier"
+                                    />
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Matricule</th>
+                                            <th>Nom complet</th>
+                                            <th>Téléphone</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="studentsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="courses">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="courseFormTitle">Nouvelle formation</h3>
+                                <button class="link-button" type="button" id="courseCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="courseForm" class="form-grid">
+                                <label>
+                                    <span>Code</span>
+                                    <input id="courseCode" type="text" required placeholder="BUR" />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="courseStatus">
+                                        <option value="active" selected>Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Nom</span>
+                                    <input id="courseName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Durée</span>
+                                    <input id="courseDuration" type="text" placeholder="6 mois" />
+                                </label>
+                                <label>
+                                    <span>Inscription</span>
+                                    <input
+                                        id="courseRegistrationFee"
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Scolarité</span>
+                                    <input id="courseTrainingFee" type="number" min="0" step="1" />
+                                </label>
+                                <label>
+                                    <span>Mensualité</span>
+                                    <input id="courseMonthlyFee" type="number" min="0" step="1" />
+                                </label>
+                                <label class="full">
+                                    <span>Description</span>
+                                    <textarea id="courseDescription" rows="3"></textarea>
+                                </label>
+                                <div class="full fee-summary-box">
+                                    <h4>Frais détaillés de la formation</h4>
+                                    <p class="muted">
+                                        Les frais détaillés se gèrent dans Paramètres > Frais par
+                                        formation. Ils seront repris automatiquement lors de
+                                        l'inscription et du paiement.
+                                    </p>
+                                    <div id="courseFeePreview" class="fee-preview-list"></div>
+                                </div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Catalogue des formations</h3>
+                                    <p id="courseCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <input
+                                        id="courseSearch"
+                                        type="search"
+                                        placeholder="Rechercher"
+                                    />
+                                    <select id="courseStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Formation</th>
+                                            <th>Durée</th>
+                                            <th>Scolarité</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="coursesTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="groups">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="groupFormTitle">Nouvelle promotion</h3>
+                                <button class="link-button" type="button" id="groupCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="groupForm" class="form-grid">
+                                <label class="full">
+                                    <span>Nom de la promotion</span>
+                                    <input
+                                        id="groupName"
+                                        type="text"
+                                        required
+                                        placeholder="Bureautique 2026 - Groupe A"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Formation</span>
+                                    <select id="groupCourse" required></select>
+                                </label>
+                                <label>
+                                    <span>Version</span>
+                                    <select id="groupCourseVersion" required></select>
+                                </label>
+                                <label>
+                                    <span>Année</span>
+                                    <input id="groupYear" type="text" required placeholder="2026" />
+                                </label>
+                                <label>
+                                    <span>Type de cours</span>
+                                    <select id="groupSessionType">
+                                        <option value="jour" selected>Cours du jour</option>
+                                        <option value="soir">Cours du soir</option>
+                                        <option value="week-end">Week-end</option>
+                                        <option value="ligne">Cours en ligne</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Formateur</span>
+                                    <select id="groupTrainer" required></select>
+                                </label>
+                                <label>
+                                    <span>Capacité</span>
+                                    <input id="groupCapacity" type="number" min="1" step="1" />
+                                </label>
+                                <label>
+                                    <span>Début</span>
+                                    <input id="groupStartDate" type="date" />
+                                </label>
+                                <label>
+                                    <span>Fin</span>
+                                    <input id="groupEndDate" type="date" />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="groupStatus">
+                                        <option value="active" selected>Active</option>
+                                        <option value="terminee">Terminée</option>
+                                        <option value="suspendue">Suspendue</option>
+                                    </select>
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Promotions et classes</h3>
+                                    <p id="groupCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <select id="groupCourseFilter"></select>
+                                    <select id="groupSessionFilter">
+                                        <option value="">Tous les types</option>
+                                        <option value="jour">Cours du jour</option>
+                                        <option value="soir">Cours du soir</option>
+                                        <option value="week-end">Week-end</option>
+                                        <option value="ligne">Cours en ligne</option>
+                                    </select>
+                                    <select id="groupStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="active">Active</option>
+                                        <option value="terminee">Terminée</option>
+                                        <option value="suspendue">Suspendue</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Promotion</th>
+                                            <th>Formation</th>
+                                            <th>Type</th>
+                                            <th>Effectif</th>
+                                            <th>Période</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="groupsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="enrollments">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="enrollmentFormTitle">Nouvelle inscription</h3>
+                                <button class="link-button" type="button" id="enrollmentCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="enrollmentForm" class="form-grid">
+                                <label class="full">
+                                    <span>Étudiant</span>
+                                    <select id="enrollmentStudent" required></select>
+                                </label>
+                                <label>
+                                    <span>Formation</span>
+                                    <select id="enrollmentCourse" required></select>
+                                </label>
+                                <label>
+                                    <span>Version</span>
+                                    <select id="enrollmentCourseVersion" required></select>
+                                </label>
+                                <label>
+                                    <span>Promotion</span>
+                                    <select id="enrollmentGroup" required></select>
+                                </label>
+                                <label>
+                                    <span>Type de cours</span>
+                                    <select id="enrollmentCourseType">
+                                        <option value="jour">Cours du jour</option>
+                                        <option value="soir">Cours du soir</option>
+                                        <option value="week-end">Week-end</option>
+                                        <option value="ligne">Cours en ligne</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="enrollmentDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Année / session</span>
+                                    <input
+                                        id="enrollmentAcademicYear"
+                                        type="text"
+                                        placeholder="2026 ou session juin 2026"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Frais d'inscription</span>
+                                    <input
+                                        id="enrollmentRegistrationFee"
+                                        type="number"
+                                        min="0"
+                                        step="500"
+                                        readonly
+                                    />
+                                </label>
+                                <label>
+                                    <span>Scolarité totale</span>
+                                    <input id="enrollmentTotal" type="number" min="0" step="500" readonly />
+                                </label>
+                                <label>
+                                    <span>Remise scolarité</span>
+                                    <input
+                                        id="enrollmentDiscount"
+                                        type="number"
+                                        min="0"
+                                        step="500"
+                                        value="0"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Scolarité finale</span>
+                                    <input id="enrollmentFinal" type="number" min="0" step="500" readonly />
+                                </label>
+                                <label>
+                                    <span>Mensualite</span>
+                                    <input
+                                        id="enrollmentMonthlyFee"
+                                        type="number"
+                                        min="0"
+                                        step="500"
+                                        readonly
+                                    />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="enrollmentStatus">
+                                        <option value="en attente">En attente</option>
+                                        <option value="validee" selected>Validée</option>
+                                        <option value="en cours">En cours</option>
+                                        <option value="suspendue">Suspendue</option>
+                                        <option value="annulee">Annulée</option>
+                                        <option value="terminee">Terminée</option>
+                                        <option value="abandon">Abandonnée</option>
+                                        <option value="desiste">Désistée</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Observation</span>
+                                    <textarea id="enrollmentObservation" rows="3"></textarea>
+                                </label>
+                                <div class="full fee-summary-box">
+                                    <h4>Frais liés à la formation</h4>
+                                    <div id="enrollmentFeeSummary" class="fee-preview-list"></div>
+                                </div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Inscriptions</h3>
+                                    <p id="enrollmentCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <input
+                                        id="enrollmentSearch"
+                                        type="search"
+                                        placeholder="Rechercher"
+                                    />
+                                    <select id="enrollmentCourseFilter"></select>
+                                    <select id="enrollmentGroupFilter"></select>
+                                    <select id="enrollmentStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="en attente">En attente</option>
+                                        <option value="validee">Validée</option>
+                                        <option value="en cours">En cours</option>
+                                        <option value="suspendue">Suspendue</option>
+                                        <option value="annulee">Annulée</option>
+                                        <option value="terminee">Terminée</option>
+                                        <option value="abandon">Abandonnée</option>
+                                        <option value="desiste">Désistée</option>
+                                    </select>
+                                    <select id="enrollmentBalanceFilter">
+                                        <option value="">Tous les soldes</option>
+                                        <option value="due">Avec reste</option>
+                                        <option value="paid">Soldés</option>
+                                    </select>
+                                    <input
+                                        id="enrollmentFromFilter"
+                                        type="date"
+                                        aria-label="Date inscription début"
+                                    />
+                                    <input
+                                        id="enrollmentToFilter"
+                                        type="date"
+                                        aria-label="Date inscription fin"
+                                    />
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Étudiant</th>
+                                            <th>Formation</th>
+                                            <th>Promotion</th>
+                                            <th>Scolarité payée</th>
+                                            <th>Annexes payées</th>
+                                            <th>Reste scolarité</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="enrollmentsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="payments">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="paymentFormTitle">Nouveau paiement</h3>
+                                <span class="badge" id="paymentBalance">Reste : 0 FCFA</span>
+                                <button
+                                    class="link-button"
+                                    type="button"
+                                    id="paymentCancelEdit"
+                                    hidden
+                                >
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="paymentForm" class="form-grid">
+                                <label class="full">
+                                    <span>Inscription</span>
+                                    <select id="paymentEnrollment" required></select>
+                                </label>
+                                <label>
+                                    <span>Motif</span>
+                                    <select id="paymentReason"></select>
+                                </label>
+                                <label>
+                                    <span>Montant</span>
+                                    <input
+                                        id="paymentAmount"
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    <span>Mode</span>
+                                    <select id="paymentMethod">
+                                        <option value="Espèce">Espèce</option>
+                                        <option value="Mobile Money">Mobile Money</option>
+                                        <option value="Virement">Virement</option>
+                                        <option value="Chèque">Chèque</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="paymentDate" type="date" required />
+                                </label>
+                                <div class="form-actions full">
+                                    <button
+                                        class="button primary"
+                                        type="submit"
+                                        id="paymentSubmitButton"
+                                    >
+                                        Encaisser
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <h3>Historique des paiements</h3>
+                                <p id="paymentCount"></p>
+                            </div>
+                            <div class="filters table-filters">
+                                <input
+                                    id="paymentSearch"
+                                    type="search"
+                                    placeholder="Rechercher reçu, étudiant, motif"
+                                />
+                                <select id="paymentCategoryFilter">
+                                    <option value="">Toutes catégories</option>
+                                    <option value="tuition">Scolarité</option>
+                                    <option value="annex">Frais annexes</option>
+                                </select>
+                                <select id="paymentMethodFilter">
+                                    <option value="">Tous les modes</option>
+                                    <option value="Espèce">Espèce</option>
+                                    <option value="Mobile Money">Mobile Money</option>
+                                    <option value="Virement">Virement</option>
+                                    <option value="Chèque">Chèque</option>
+                                </select>
+                                <input id="paymentMonthFilter" type="month" />
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Reçu</th>
+                                            <th>Étudiant</th>
+                                            <th>Inscription / recu</th>
+                                            <th>Catégorie</th>
+                                            <th>Montant</th>
+                                            <th>Mode</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="paymentsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h3>Journal des corrections</h3>
+                            <p id="paymentAuditCount"></p>
+                        </div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                        <th>Reçu</th>
+                                        <th>Étudiant</th>
+                                        <th>Motif supprimé/modifié</th>
+                                        <th>Montant</th>
+                                        <th>Responsable</th>
+                                        <th>Motif de contrôle</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paymentAuditTable"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="view" data-view="cash">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Nouvelle opération</h3>
+                                <span class="badge" id="cashBalance">Solde : 0 FCFA</span>
+                            </div>
+                            <form id="cashForm" class="form-grid">
+                                <label>
+                                    <span>Type</span>
+                                    <select id="cashType">
+                                        <option value="income">Entrée</option>
+                                        <option value="expense">Dépense</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="cashDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Catégorie</span>
+                                    <input
+                                        id="cashCategory"
+                                        type="text"
+                                        required
+                                        placeholder="Loyer, salaire, don, fourniture..."
+                                    />
+                                </label>
+                                <label>
+                                    <span>Montant</span>
+                                    <input
+                                        id="cashAmount"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    <span>Mode</span>
+                                    <select id="cashMethod">
+                                        <option value="Espèce">Espèce</option>
+                                        <option value="Mobile Money">Mobile Money</option>
+                                        <option value="Virement">Virement</option>
+                                        <option value="Chèque">Chèque</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Description</span>
+                                    <input
+                                        id="cashDescription"
+                                        type="text"
+                                        placeholder="Détail de l'opération"
+                                    />
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <div>
+                                    <h3>Journal de caisse</h3>
+                                    <p id="cashCount"></p>
+                                </div>
+                                <div class="actions">
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="closeCashDay"
+                                    >
+                                        Cloturer la journee
+                                    </button>
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="exportCashCsv"
+                                    >
+                                        Exporter CSV
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Catégorie</th>
+                                            <th>Montant</th>
+                                            <th>Mode</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cashTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="attendance">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Appel</h3>
+                                <span class="badge" id="attendanceTotal">0 étudiant</span>
+                            </div>
+                            <form id="attendanceForm" class="form-grid">
+                                <label>
+                                    <span>Promotion</span>
+                                    <select id="attendanceGroup" required></select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="attendanceDate" type="date" required />
+                                </label>
+                                <label class="full">
+                                    <span>Module / thème</span>
+                                    <input
+                                        id="attendanceTopic"
+                                        type="text"
+                                        placeholder="Module du jour"
+                                    />
+                                </label>
+                                <div class="full attendance-list" id="attendanceList"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer l'appel
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <h3>Historique des présences</h3>
+                                <p id="attendanceCount"></p>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Promotion</th>
+                                            <th>Présents</th>
+                                            <th>Absents</th>
+                                            <th>Retards</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="attendanceTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="two-column attendance-teacher-area">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Appel des professeurs</h3>
+                                <span class="badge" id="trainerAttendanceTotal">0 professeur</span>
+                            </div>
+                            <form id="trainerAttendanceForm" class="form-grid">
+                                <label>
+                                    <span>Date</span>
+                                    <input id="trainerAttendanceDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Observation</span>
+                                    <input
+                                        id="trainerAttendanceTopic"
+                                        type="text"
+                                        placeholder="Cours, réunion, permanence..."
+                                    />
+                                </label>
+                                <div class="full attendance-list" id="trainerAttendanceList"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer l'appel
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <h3>Historique des professeurs</h3>
+                                <p id="trainerAttendanceCount"></p>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Professeurs</th>
+                                            <th>Présents</th>
+                                            <th>Absents</th>
+                                            <th>Retards</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="trainerAttendanceTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="trainers">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="trainerFormTitle">Nouveau formateur</h3>
+                                <button class="link-button" type="button" id="trainerCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="trainerForm" class="form-grid">
+                                <label>
+                                    <span>Nom</span>
+                                    <input id="trainerLastName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Prénom</span>
+                                    <input id="trainerFirstName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Téléphone</span>
+                                    <input id="trainerPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Email</span>
+                                    <input id="trainerEmail" type="email" />
+                                </label>
+                                <label class="full">
+                                    <span>Spécialité</span>
+                                    <input
+                                        id="trainerSpecialty"
+                                        type="text"
+                                        placeholder="Bureautique, comptabilité, maintenance..."
+                                    />
+                                </label>
+                                <label class="full">
+                                    <span>Modules enseignés</span>
+                                    <input
+                                        id="trainerModules"
+                                        type="text"
+                                        placeholder="Word, Excel, pratique comptable..."
+                                    />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="trainerStatus">
+                                        <option value="actif" selected>Actif</option>
+                                        <option value="indisponible">Indisponible</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                </label>
+                                <div class="full person-file-box">
+                                    <div class="person-photo-box">
+                                        <div class="person-photo-preview" id="trainerPhotoPreview">
+                                            Photo
+                                        </div>
+                                        <div class="action-stack">
+                                            <label class="file-input">
+                                                <span>Choisir une photo</span>
+                                                <input
+                                                    id="trainerPhotoInput"
+                                                    type="file"
+                                                    accept="image/png,image/jpeg,image/webp"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="trainerRemovePhoto"
+                                            >
+                                                Retirer la photo
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="document-upload-box">
+                                        <h4>Dossier formateur</h4>
+                                        <div class="document-upload-row">
+                                            <input
+                                                id="trainerDocumentType"
+                                                type="text"
+                                                placeholder="Nom du document : contrat signé, diplôme, CV..."
+                                                aria-label="Nom du document formateur"
+                                            />
+                                            <label class="file-input">
+                                                <span>Choisir fichier</span>
+                                                <input
+                                                    id="trainerDocumentFile"
+                                                    type="file"
+                                                    accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="trainerAddDocument"
+                                            >
+                                                Ajouter
+                                            </button>
+                                        </div>
+                                        <div
+                                            id="trainerDocumentList"
+                                            class="attached-document-list"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Equipe pédagogique</h3>
+                                    <p id="trainerCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <input
+                                        id="trainerSearch"
+                                        type="search"
+                                        placeholder="Rechercher"
+                                    />
+                                    <select id="trainerStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="actif">Actif</option>
+                                        <option value="indisponible">Indisponible</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Formateur</th>
+                                            <th>Contact</th>
+                                            <th>Spécialité</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="trainersTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="staff">
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="staffFormTitle">Nouveau personnel</h3>
+                                <button class="link-button" type="button" id="staffCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="staffForm" class="form-grid">
+                                <label>
+                                    <span>Nom</span>
+                                    <input id="staffLastName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Prénom</span>
+                                    <input id="staffFirstName" type="text" required />
+                                </label>
+                                <label>
+                                    <span>Fonction</span>
+                                    <input
+                                        id="staffRole"
+                                        type="text"
+                                        required
+                                        placeholder="Secrétaire, comptable, surveillant..."
+                                    />
+                                </label>
+                                <label>
+                                    <span>Salaire prévu</span>
+                                    <input
+                                        id="staffSalary"
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                        value="0"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Téléphone</span>
+                                    <input id="staffPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Email</span>
+                                    <input id="staffEmail" type="email" />
+                                </label>
+                                <label>
+                                    <span>Statut</span>
+                                    <select id="staffStatus">
+                                        <option value="actif" selected>Actif</option>
+                                        <option value="suspendu">Suspendu</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                </label>
+                                <div class="full person-file-box">
+                                    <div class="person-photo-box">
+                                        <div class="person-photo-preview" id="staffPhotoPreview">
+                                            Photo
+                                        </div>
+                                        <div class="action-stack">
+                                            <label class="file-input">
+                                                <span>Choisir une photo</span>
+                                                <input
+                                                    id="staffPhotoInput"
+                                                    type="file"
+                                                    accept="image/png,image/jpeg,image/webp"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="staffRemovePhoto"
+                                            >
+                                                Retirer la photo
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="document-upload-box">
+                                        <h4>Dossier personnel</h4>
+                                        <div class="document-upload-row">
+                                            <input
+                                                id="staffDocumentType"
+                                                type="text"
+                                                placeholder="Nom du document : contrat signé, CNI, fiche..."
+                                                aria-label="Nom du document personnel"
+                                            />
+                                            <label class="file-input">
+                                                <span>Choisir fichier</span>
+                                                <input
+                                                    id="staffDocumentFile"
+                                                    type="file"
+                                                    accept="image/*,.pdf,.doc,.docx,.xls,.xlsx"
+                                                />
+                                            </label>
+                                            <button
+                                                class="button secondary"
+                                                type="button"
+                                                id="staffAddDocument"
+                                            >
+                                                Ajouter
+                                            </button>
+                                        </div>
+                                        <div
+                                            id="staffDocumentList"
+                                            class="attached-document-list"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Liste du personnel</h3>
+                                    <p id="staffCount"></p>
+                                </div>
+                                <div class="filters">
+                                    <input
+                                        id="staffSearch"
+                                        type="search"
+                                        placeholder="Rechercher"
+                                    />
+                                    <select id="staffStatusFilter">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="actif">Actif</option>
+                                        <option value="suspendu">Suspendu</option>
+                                        <option value="archive">Archivé</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Personnel</th>
+                                            <th>Fonction</th>
+                                            <th>Salaire prévu</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="staffTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="two-column staff-payment-area">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Paiement personnel / formateur</h3>
+                                <span class="badge" id="staffPaymentTotal">0 FCFA</span>
+                            </div>
+                            <form id="staffPaymentForm" class="form-grid">
+                                <label class="full">
+                                    <span>Bénéficiaire</span>
+                                    <select id="staffPaymentStaff" required></select>
+                                </label>
+                                <label>
+                                    <span>Période</span>
+                                    <input id="staffPaymentPeriod" type="month" required />
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="staffPaymentDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Motif</span>
+                                    <select id="staffPaymentReason">
+                                        <option value="Salaire">Salaire</option>
+                                        <option value="Prime">Prime</option>
+                                        <option value="Avance">Avance</option>
+                                        <option value="Transport">Transport</option>
+                                        <option value="Autre">Autre</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Montant</span>
+                                    <input
+                                        id="staffPaymentAmount"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        required
+                                    />
+                                </label>
+                                <label>
+                                    <span>Mode</span>
+                                    <select id="staffPaymentMethod">
+                                        <option value="Espèce">Espèce</option>
+                                        <option value="Mobile Money">Mobile Money</option>
+                                        <option value="Virement">Virement</option>
+                                        <option value="Chèque">Chèque</option>
+                                    </select>
+                                </label>
+                                <label class="full">
+                                    <span>Note</span>
+                                    <input
+                                        id="staffPaymentNote"
+                                        type="text"
+                                        placeholder="Détail du paiement"
+                                    />
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer le paiement
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <h3>Historique des fiches de paie</h3>
+                                <p id="staffPaymentCount"></p>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Bénéficiaire</th>
+                                            <th>Période</th>
+                                            <th>Motif</th>
+                                            <th>Montant</th>
+                                            <th>Mode</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="staffPaymentsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="grades">
+                    <section class="panel wide-panel grade-student-panel">
+                        <div class="panel-header stacked">
+                            <div>
+                                <h3>Saisie par étudiant</h3>
+                                <p class="muted">
+                                    Rechercher l'étudiant, choisir son inscription, puis saisir la note concernée.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <label class="full">
+                                <span>Rechercher un étudiant</span>
+                                <input
+                                    id="gradeStudentSearch"
+                                    type="search"
+                                    placeholder="Matricule, nom, prénom ou téléphone"
+                                />
+                            </label>
+                            <div class="full student-search-results" id="gradeStudentResults"></div>
+                            <form id="studentGradeForm" class="form-grid full">
+                                <label class="full">
+                                    <span>Inscription concernée</span>
+                                    <select id="studentGradeEnrollment" required></select>
+                                </label>
+                                <label>
+                                    <span>Module / matière</span>
+                                    <input id="studentGradeTitle" type="text" required placeholder="Ex : Word, Excel, Transit..." />
+                                </label>
+                                <label>
+                                    <span>Type</span>
+                                    <select id="studentGradeType">
+                                        <option value="devoir">Devoir</option>
+                                        <option value="test">Test</option>
+                                        <option value="pratique">Pratique</option>
+                                        <option value="examen">Examen</option>
+                                        <option value="rattrapage">Rattrapage</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="studentGradeDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Barème</span>
+                                    <input id="studentGradeMaxScore" type="number" min="1" step="1" value="20" required />
+                                </label>
+                                <label>
+                                    <span>Coefficient</span>
+                                    <input id="studentGradeCoefficient" type="number" min="1" step="0.5" value="1" />
+                                </label>
+                                <label>
+                                    <span>Note</span>
+                                    <input id="studentGradeScore" type="number" min="0" step="0.25" />
+                                </label>
+                                <label>
+                                    <span>Note rattrapage</span>
+                                    <input id="studentGradeMakeupScore" type="number" min="0" step="0.25" />
+                                </label>
+                                <label class="full">
+                                    <span>Appréciation</span>
+                                    <input id="studentGradeAppreciation" type="text" />
+                                </label>
+                                <div class="full grade-student-decision" id="studentGradeDecision">
+                                    Choisissez un étudiant et saisissez une note.
+                                </div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">Enregistrer la note</button>
+                                </div>
+                            </form>
+                            <div class="table-wrap full">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Module</th>
+                                            <th>Inscription</th>
+                                            <th>Note</th>
+                                            <th>Décision</th>
+                                            <th>Appréciation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="studentGradeHistoryTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="two-column">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3 id="evaluationFormTitle">Saisie par promotion</h3>
+                                <button class="link-button" type="button" id="evaluationCancelEdit">
+                                    Annuler
+                                </button>
+                            </div>
+                            <form id="evaluationForm" class="form-grid">
+                                <label class="full">
+                                    <span>Titre</span>
+                                    <input
+                                        id="evaluationTitle"
+                                        type="text"
+                                        required
+                                        placeholder="Examen Word, devoir Excel..."
+                                    />
+                                </label>
+                                <label>
+                                    <span>Promotion</span>
+                                    <select id="evaluationGroup" required></select>
+                                </label>
+                                <label>
+                                    <span>Formateur</span>
+                                    <select id="evaluationTrainer"></select>
+                                </label>
+                                <label>
+                                    <span>Type</span>
+                                    <select id="evaluationType">
+                                        <option value="devoir">Devoir</option>
+                                        <option value="examen">Examen</option>
+                                        <option value="pratique">Pratique</option>
+                                        <option value="projet">Projet</option>
+                                        <option value="stage">Stage</option>
+                                        <option value="rattrapage">Rattrapage</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Date</span>
+                                    <input id="evaluationDate" type="date" required />
+                                </label>
+                                <label>
+                                    <span>Barème</span>
+                                    <input
+                                        id="evaluationMaxScore"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        value="20"
+                                        required
+                                    />
+                                </label>
+                                <div class="full grade-entry-list" id="gradeEntryList"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer les notes
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-panel">
+                            <div class="panel-header">
+                                <h3>Evaluations et relevés</h3>
+                                <p id="evaluationCount"></p>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Evaluation</th>
+                                            <th>Promotion</th>
+                                            <th>Date</th>
+                                            <th>Moyenne</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="evaluationsTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="reports">
+                    <div class="report-grid">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Rapport financier</h3>
+                                <button
+                                    class="button secondary"
+                                    type="button"
+                                    id="exportPaymentsCsv"
+                                >
+                                    Exporter CSV
+                                </button>
+                            </div>
+                            <div class="report-cards" id="financialReport"></div>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Restes scolarité</h3>
+                                <button class="button secondary" type="button" id="printBalances">
+                                    Imprimer
+                                </button>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Étudiant</th>
+                                            <th>Formation</th>
+                                            <th>Scolarité payée</th>
+                                            <th>Reste scolarité</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reportBalancesTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="panel report-distribution-panel">
+                            <div class="panel-header">
+                                <h3>Effectifs par formation</h3>
+                                <button
+                                    class="button secondary"
+                                    type="button"
+                                    id="exportStudentsCsv"
+                                >
+                                    Exporter CSV
+                                </button>
+                            </div>
+                            <div id="courseDistribution" class="distribution"></div>
+                        </section>
+
+                        <section class="panel report-schedule-panel">
+                            <div class="panel-header">
+                                <h3>Échéances mensuelles</h3>
+                                <span class="badge" id="monthlyScheduleCount">0 échéance</span>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mois</th>
+                                            <th>Étudiant</th>
+                                            <th>Formation</th>
+                                            <th>Prévu</th>
+                                            <th>Payé scolarité</th>
+                                            <th>Reste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="monthlyScheduleTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="panel wide-panel document-generator-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Documents personnalisés</h3>
+                                    <p>
+                                        Contrats, attestations et règlements générés depuis les
+                                        modèles
+                                    </p>
+                                </div>
+                                <button
+                                    class="button secondary"
+                                    type="button"
+                                    id="printCustomDocument"
+                                >
+                                    Imprimer
+                                </button>
+                            </div>
+                            <div class="form-grid compact-document-grid">
+                                <label>
+                                    <span>Modèle</span>
+                                    <select id="documentGeneratorTemplate"></select>
+                                </label>
+                                <label>
+                                    <span>Étudiant</span>
+                                    <select id="documentGeneratorStudent"></select>
+                                </label>
+                                <label>
+                                    <span>Personnel / formateur</span>
+                                    <select id="documentGeneratorBeneficiary"></select>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="panel wide-panel report-individual-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Rapport individuel étudiant</h3>
+                                    <p>Scolarité séparée des frais annexes</p>
+                                </div>
+                                <div class="filters">
+                                    <select id="individualReportStudent"></select>
+                                    <button
+                                        class="button primary"
+                                        type="button"
+                                        id="previewIndividualReportPdf"
+                                    >
+                                        PDF
+                                    </button>
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="printIndividualReport"
+                                    >
+                                        Imprimer
+                                    </button>
+                                    <button
+                                        class="button secondary"
+                                        type="button"
+                                        id="printStudentTranscript"
+                                    >
+                                        Relevé de notes
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="report-cards compact-report-cards"
+                                id="individualReportSummary"
+                            ></div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Frais / inscription</th>
+                                            <th>Catégorie</th>
+                                            <th>Attendu / payé / reste</th>
+                                            <th>Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="individualMotifTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="view" data-view="settings">
+                    <div class="settings-grid">
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Données</h3>
+                            </div>
+                            <div class="action-stack">
+                                <button class="button secondary" type="button" id="exportJson">
+                                    Exporter sauvegarde complète
+                                </button>
+                                <button class="button secondary" type="button" id="exportAllCsv">
+                                    Exporter tout en CSV
+                                </button>
+                                <label class="file-input">
+                                    <span>Importer JSON</span>
+                                    <input id="importJson" type="file" accept="application/json" />
+                                </label>
+                                <button
+                                    class="button secondary"
+                                    type="button"
+                                    id="enableCleanupMode"
+                                >
+                                    Activer nettoyage test
+                                </button>
+                                <p class="muted" id="cleanupModeStatus">Nettoyage test désactivé</p>
+                                <button class="button danger" type="button" id="resetData">
+                                    Réinitialiser les données
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Sécurité</h3>
+                            </div>
+                            <form id="securitySettingsForm" class="form-grid">
+                                <label>
+                                    <span>Déconnexion après inactivité</span>
+                                    <input id="idleTimeoutMinutes" type="number" min="1" max="480" step="1" />
+                                </label>
+                                <p class="muted full">
+                                    Durée en minutes. En ligne, la session se ferme automatiquement si aucun clic, clavier ou toucher n'est détecté.
+                                </p>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer la sécurité
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Archivage annuel</h3>
+                            </div>
+                            <form id="academicYearForm" class="form-grid">
+                                <label>
+                                    <span>Année active</span>
+                                    <input id="activeAcademicYear" type="number" min="2000" max="2100" step="1" />
+                                </label>
+                                <label>
+                                    <span>Années archivées</span>
+                                    <input id="archivedAcademicYears" type="text" placeholder="Ex : 2024, 2025" />
+                                </label>
+                                <p class="muted full">
+                                    Les années archivées restent conservées. Elles ne sont plus mélangées aux statistiques de l’année active.
+                                </p>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer l'année
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Centre</h3>
+                            </div>
+                            <form id="centerForm" class="form-grid">
+                                <div class="full logo-setting">
+                                    <div class="logo-preview" id="centerLogoPreview">CE</div>
+                                    <div class="action-stack">
+                                        <label class="file-input">
+                                            <span>Choisir un logo</span>
+                                            <input
+                                                id="centerLogo"
+                                                type="file"
+                                                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                                            />
+                                        </label>
+                                        <button
+                                            class="button secondary"
+                                            type="button"
+                                            id="removeCenterLogo"
+                                        >
+                                            Retirer le logo
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="full logo-setting">
+                                    <div class="logo-preview stamp-preview" id="centerStampPreview">
+                                        Cachet
+                                    </div>
+                                    <div class="action-stack">
+                                        <label class="file-input">
+                                            <span>Choisir signature/cachet</span>
+                                            <input
+                                                id="centerStamp"
+                                                type="file"
+                                                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                                            />
+                                        </label>
+                                        <button
+                                            class="button secondary"
+                                            type="button"
+                                            id="removeCenterStamp"
+                                        >
+                                            Retirer signature/cachet
+                                        </button>
+                                    </div>
+                                </div>
+                                <label>
+                                    <span>Nom</span>
+                                    <input id="centerName" type="text" value="CFP EREXIT" />
+                                </label>
+                                <label>
+                                    <span>Sous-titre</span>
+                                    <input
+                                        id="centerSubtitle"
+                                        type="text"
+                                        value="Centre de Formation Professionnelle"
+                                    />
+                                </label>
+                                <label>
+                                    <span>Téléphone</span>
+                                    <input id="centerPhone" type="tel" />
+                                </label>
+                                <label>
+                                    <span>Email</span>
+                                    <input id="centerEmail" type="email" />
+                                </label>
+                                <label class="full">
+                                    <span>Adresse</span>
+                                    <input id="centerAddress" type="text" />
+                                </label>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel">
+                            <div class="panel-header">
+                                <h3>Montants par motif</h3>
+                                <button class="button secondary" type="button" id="addPaymentMotif">
+                                    Ajouter
+                                </button>
+                            </div>
+                            <form id="motifSettingsForm" class="form-grid">
+                                <div id="paymentMotifsSettings" class="full motif-settings"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header">
+                                <h3>Frais des formations</h3>
+                            </div>
+                            <form id="courseFeesSettingsForm" class="form-grid">
+                                <div id="courseFeesSettings" class="full fee-settings"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header stacked">
+                                <div>
+                                    <h3>Modèles de documents</h3>
+                                    <p>
+                                        Attestations, contrats, règlement intérieur et documents
+                                        internes
+                                    </p>
+                                </div>
+                                <button
+                                    class="button secondary"
+                                    type="button"
+                                    id="newDocumentTemplate"
+                                >
+                                    Nouveau modèle
+                                </button>
+                            </div>
+                            <div class="document-template-layout">
+                                <div id="documentTemplateList" class="document-template-list"></div>
+                                <form
+                                    id="documentTemplateForm"
+                                    class="form-grid document-template-form"
+                                >
+                                    <input id="documentTemplateEditKey" type="hidden" />
+                                    <label>
+                                        <span>Titre</span>
+                                        <input
+                                            id="documentTemplateTitle"
+                                            type="text"
+                                            placeholder="Ex. Attestation de stage"
+                                            required
+                                        />
+                                    </label>
+                                    <label>
+                                        <span>Catégorie</span>
+                                        <select id="documentTemplateCategory">
+                                            <option>Attestation</option>
+                                            <option>Contrat</option>
+                                            <option>Règlement</option>
+                                            <option>Autre</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <span>Destinataire</span>
+                                        <select id="documentTemplateAudience">
+                                            <option value="student">Étudiant</option>
+                                            <option value="staff">Personnel / formateur</option>
+                                            <option value="general">Général</option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <span>Statut</span>
+                                        <select id="documentTemplateStatus">
+                                            <option value="active">Actif</option>
+                                            <option value="archive">Archivé</option>
+                                        </select>
+                                    </label>
+                                    <label class="full">
+                                        <span>Contenu</span>
+                                        <textarea
+                                            id="documentTemplateContent"
+                                            rows="12"
+                                            placeholder="Rédigez votre document ici..."
+                                            required
+                                        ></textarea>
+                                    </label>
+                                    <p class="muted full placeholder-help">
+                                        Variables possibles : {{centre_nom}}, {{etudiant_nom}},
+                                        {{matricule}}, {{formation}}, {{promotion}}, {{type_cours}},
+                                        {{scolarite}}, {{reste_scolarite}}, {{beneficiaire_nom}},
+                                        {{fonction}}, {{date}}.
+                                    </p>
+                                    <div class="form-actions full">
+                                        <button
+                                            class="button secondary"
+                                            type="button"
+                                            id="documentTemplateCancelEdit"
+                                        >
+                                            Annuler
+                                        </button>
+                                        <button class="button primary" type="submit">
+                                            Enregistrer le modèle
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header">
+                                <h3>Documents obligatoires</h3>
+                            </div>
+                            <form id="requiredDocumentsForm" class="form-grid">
+                                <div
+                                    id="requiredDocumentsSettings"
+                                    class="full required-documents-settings"
+                                ></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer les obligations
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header">
+                                <h3>Accès utilisateurs</h3>
+                                <button class="button secondary" type="button" id="addUserAccess">
+                                    Ajouter
+                                </button>
+                            </div>
+                            <div id="passwordResetRequests" class="password-reset-requests"></div>
+                            <form id="userAccessForm" class="form-grid">
+                                <div id="userAccessSettings" class="full access-settings"></div>
+                                <div class="form-actions full">
+                                    <button class="button primary" type="submit">
+                                        Enregistrer les accès
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header">
+                                <h3>Historique de connexion</h3>
+                                <span class="badge" id="loginHistoryCount">0 action(s)</span>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Identifiant</th>
+                                            <th>Utilisateur</th>
+                                            <th>Résultat</th>
+                                            <th>Adresse IP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="loginHistoryTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+
+                        <section class="panel wide-settings-panel">
+                            <div class="panel-header">
+                                <h3>Journal d'audit général</h3>
+                                <span class="badge" id="auditLogCount">0 action(s)</span>
+                            </div>
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Section</th>
+                                            <th>Action</th>
+                                            <th>Détail</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="auditLogTable"></tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+        <div class="security-modal" id="passwordChangeModal" hidden>
+            <div class="security-modal-backdrop"></div>
+            <form
+                class="security-modal-card"
+                id="passwordChangeForm"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="passwordChangeTitle"
+            >
+                <p class="eyebrow">Securite du compte</p>
+                <h3 id="passwordChangeTitle">Changer votre mot de passe</h3>
+                <p class="muted">
+                    Ce compte utilise un mot de passe initial ou ancien. Choisissez un nouveau mot
+                    de passe avant de continuer.
+                </p>
+                <label>
+                    <span>Mot de passe actuel</span>
+                    <input
+                        id="currentPasswordChange"
+                        type="password"
+                        autocomplete="current-password"
+                        required
+                    />
+                </label>
+                <label>
+                    <span>Nouveau mot de passe</span>
+                    <input
+                        id="newPasswordChange"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                    />
+                </label>
+                <label>
+                    <span>Confirmer le nouveau mot de passe</span>
+                    <input
+                        id="confirmPasswordChange"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                    />
+                </label>
+                <p class="login-error" id="passwordChangeError"></p>
+                <button class="button primary" type="submit">
+                    Enregistrer le nouveau mot de passe
+                </button>
+            </form>
+        </div>
+        <div class="print-preview-modal" id="printPreviewModal" hidden>
+            <div class="print-preview-backdrop" data-action="close-print-preview"></div>
+            <section
+                class="print-preview-shell"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="printPreviewTitle"
+            >
+                <header class="print-preview-header">
+                    <div>
+                        <p class="eyebrow">Aperçu PDF</p>
+                        <h3 id="printPreviewTitle">Document</h3>
+                    </div>
+                    <div class="print-preview-actions">
+                        <button
+                            class="button secondary"
+                            type="button"
+                            data-action="close-print-preview"
+                        >
+                            Fermer
+                        </button>
+                        <button class="button primary" type="button" id="printPreviewPrint">
+                            Imprimer / Enregistrer PDF
+                        </button>
+                    </div>
+                </header>
+                <div class="print-preview-body" id="printPreviewBody"></div>
+            </section>
+        </div>
+        <div id="printArea" class="print-area"></div>
+    </body>
+</html>
+

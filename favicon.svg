@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CFP EREXIT">
+  <rect width="64" height="64" rx="14" fill="#ffffff"/>
+  <path d="M12 44c10 2 16-2 20 3 4-5 10-1 20-3" fill="none" stroke="#1f83b7" stroke-width="4" stroke-linecap="round"/>
+  <path d="M16 50c8 1 12-2 16 2 4-4 8-1 16-2" fill="none" stroke="#1f83b7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32 39 20 19l12 9 12-9z" fill="#ff6a00"/>
+  <path d="M20 17 32 12l12 5-12 5z" fill="#ff6a00"/>
+  <path d="M44 18v9" stroke="#ff6a00" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="44" cy="30" r="3" fill="#ff6a00"/>
+  <path d="M10 4h44a6 6 0 0 1 6 6v44a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V10a6 6 0 0 1 6-6z" fill="none" stroke="#e7eef4" stroke-width="2"/>
+</svg>

@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS cfp_state (
+  id TINYINT UNSIGNED NOT NULL PRIMARY KEY,
+  data LONGTEXT NOT NULL,
+  updated_at VARCHAR(40) NOT NULL,
+  updated_by VARCHAR(190) NOT NULL DEFAULT '',
+  revision BIGINT UNSIGNED NOT NULL DEFAULT 1,
+  CONSTRAINT cfp_state_json CHECK (JSON_VALID(data))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS cfp_state_revisions (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  state_id TINYINT UNSIGNED NOT NULL,
+  revision BIGINT UNSIGNED NOT NULL,
+  updated_at VARCHAR(40) NOT NULL,
+  updated_by VARCHAR(190) NOT NULL DEFAULT '',
+  data LONGTEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_cfp_state_revisions_state_revision (state_id, revision),
+  CONSTRAINT cfp_state_revisions_json CHECK (JSON_VALID(data))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

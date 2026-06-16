@@ -1,0 +1,13 @@
+{
+  "name": "cfp-erexit-manager",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Application web de gestion pour CFP EREXIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "mysql2": "^3.11.5"
+  }
+}
